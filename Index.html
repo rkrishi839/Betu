@@ -1,55 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sorry Betu ❤️</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 
 body{
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(-45deg,#ff758c,#ff7eb3,#ff9a9e,#fad0c4);
-background-size:400% 400%;
-animation:bg 10s ease infinite;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
 overflow:hidden;
-}
-
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
 }
 
 .card{
 width:90%;
 max-width:400px;
-padding:30px;
+padding:25px;
 text-align:center;
-background:rgba(255,255,255,0.15);
+background:rgba(255,255,255,.15);
 backdrop-filter:blur(10px);
 border-radius:25px;
 color:white;
-box-shadow:0 0 25px rgba(0,0,0,.2);
-z-index:2;
 }
 
 .photo{
-width:170px;
-height:170px;
+width:180px;
+height:180px;
 border-radius:50%;
 object-fit:cover;
 border:5px solid white;
-box-shadow:0 0 20px rgba(255,255,255,.8);
 }
 
 h1{
@@ -60,7 +44,6 @@ font-size:30px;
 p{
 margin-top:15px;
 line-height:1.7;
-font-size:17px;
 }
 
 button{
@@ -68,104 +51,79 @@ margin-top:15px;
 padding:12px 25px;
 border:none;
 border-radius:30px;
-cursor:pointer;
 font-size:16px;
 font-weight:bold;
-background:white;
-color:#ff4d88;
-}
-
-#special{
-display:none;
-margin-top:20px;
-font-size:18px;
-animation:fade 1s;
-}
-
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
+cursor:pointer;
 }
 
 .heart{
 position:absolute;
 bottom:-20px;
-font-size:25px;
-animation:float linear forwards;
+animation:float 6s linear forwards;
 }
 
 @keyframes float{
-0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-110vh);opacity:0;}
+100%{
+transform:translateY(-110vh);
+opacity:0;
+}
 }
 </style>
 </head>
+
 <body>
 
-<!-- Music -->
 <audio id="music" loop>
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card">
 
-<!-- Apni photo ka URL lagao -->
-<img src="photos/betu.jpg" class="photo">
+<img src="photos/photo1.jpg" class="photo">
 
-<h1>🥺 Betu, Please Maaf Kar Do ❤️</h1>
+<h1>🥺 Betu ❤️</h1>
 
 <p>
-Betu... 🥹💖<br><br>
+Please apne Betu ko maaf kar do na... 🥺💔<br><br>
 
-Mujhse galti ho gayi hai... 💔<br>
-Aur mujhe glti ka afsos h betu 🙏❤️<br><br>
+Mujhse galti ho gayi... 😔<br>
+Aur mujhe uska bahut afsos hai ❤️<br><br>
 
-Please apne Betu ko maaf kar do na... 🥺💕<br>
-Tumhari smile meri duniya hai 🌍❤️<br>
-Tumhare bina sab kuch adhura lagta hai... 💞✨
+Tum meri duniya ho 🌍💕<br>
+Tumhare bina sab adhura lagta hai 💖
 </p>
 
-<button onclick="playMusic()">🎵 Play Song</button>
+<button onclick="document.getElementById('music').play()">
+🎵 Play Song
+</button>
 
-<button onclick="showMsg()">💖 Maaf Kiya?</button>
+<br>
 
-<div id="special">
-🌹 Thank You Betu 🌹<br>
-I Lobbbbbb youuuuu So Much Betu ❤️🥰✨
-</div>
+<a href="memories.html">
+<button>
+📸 Our Memories ❤️
+</button>
+</a>
 
 </div>
 
 <script>
-
-function playMusic(){
-document.getElementById("music").play();
-}
-
-function showMsg(){
-document.getElementById("special").style.display="block";
-}
-
 function createHeart(){
-const heart=document.createElement("div");
-heart.classList.add("heart");
-
-const emojis=["❤️","💕","💖","💘","🥰","😘","🌹"];
-heart.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
 
 heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*20)+"px";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
+heart.style.fontSize=(20+Math.random()*25)+"px";
 
 document.body.appendChild(heart);
 
 setTimeout(()=>{
 heart.remove();
-},8000);
+},6000);
 }
 
-setInterval(createHeart,250);
-
+setInterval(createHeart,300);
 </script>
 
 </body>
