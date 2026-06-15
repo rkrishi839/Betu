@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pratiksha Kharpuriya | 3D Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
+
+:root{
+--bg:#050816;
+--glass:rgba(255,255,255,.06);
+--purple:#915EFF;
+--blue:#00D4FF;
+--text:#ffffff;
+}
+
+body{
+background:var(--bg);
+overflow-x:hidden;
+color:white;
+}
+
+/* Three JS Canvas */
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-10;
+}
+
+/* Glow Cursor */
+
+.glow{
+position:fixed;
+width:300px;
+height:300px;
+background:radial-gradient(
+circle,
+rgba(145,94,255,.25),
+transparent 70%
+);
+pointer-events:none;
+z-index:-1;
+transform:translate(-50%,-50%);
+}
+
+/* Navbar */
+
+nav{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:1200px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:15px 30px;
+
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:25px;
+
+z-index:999;
+}
+
+.logo{
+font-size:1.6rem;
+font-weight:800;
+
+background:linear-gradient(
+90deg,
+#915EFF,
+#00D4FF
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+font-weight:500;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:#915EFF;
+}
+
+/* Hero */
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:120px 8%;
+}
+
+.left{
+max-width:650px;
+}
+
+.tag{
+display:inline-block;
+padding:10px 20px;
+background:rgba(145,94,255,.15);
+border:1px solid rgba(145,94,255,.4);
+border-radius:30px;
+margin-bottom:20px;
+}
+
+.left h1{
+font-size:5rem;
+line-height:1.1;
+font-weight:800;
+}
+
+.gradient{
+background:linear-gradient(
+90deg,
+#915EFF,
+#00D4FF
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.typing{
+font-size:1.5rem;
+margin-top:15px;
+color:#ccc;
+min-height:50px;
+}
+
+.desc{
+margin-top:20px;
+line-height:1.8;
+font-size:1.05rem;
+color:#bcbcbc;
+}
+
+.buttons{
+margin-top:35px;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 30px;
+border:none;
+cursor:pointer;
+font-weight:600;
+border-radius:40px;
+transition:.4s;
+}
+
+.btn-primary{
+background:linear-gradient(
+90deg,
+#915EFF,
+#00D4FF
+);
+color:white;
+}
+
+.btn-secondary{
+background:transparent;
+color:white;
+border:2px solid #915EFF;
+}
+
+.btn:hover{
+transform:translateY(-6px);
+}
+
+/* 3D Profile Card */
+
+.right{
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:1000px;
+}
+
+.profile-card{
+
+width:380px;
+height:500px;
+
+background:rgba(255,255,255,.06);
+
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:30px;
+
+position:relative;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+transition:.2s;
+
+overflow:hidden;
+
+box-shadow:
+0 0 50px rgba(145,94,255,.3);
+}
+
+.profile-card::before{
+content:'';
+
+position:absolute;
+
+width:200px;
+height:200px;
+
+background:#915EFF;
+
+filter:blur(120px);
+
+top:-50px;
+left:-50px;
+
+opacity:.6;
+}
+
+.profile-card::after{
+content:'';
+
+position:absolute;
+
+width:200px;
+height:200px;
+
+background:#00D4FF;
+
+filter:blur(120px);
+
+bottom:-50px;
+right:-50px;
+
+opacity:.6;
+}
+
+.profile-img{
+width:220px;
+height:220px;
+border-radius:50%;
+border:5px solid rgba(255,255,255,.2);
+object-fit:cover;
+z-index:5;
+}
+
+.profile-card h2{
+margin-top:25px;
+z-index:5;
+font-size:2rem;
+}
+
+.profile-card p{
+z-index:5;
+color:#ddd;
+}
+
+/* Floating Orbs */
+
+.orb{
+position:absolute;
+border-radius:50%;
+filter:blur(60px);
+animation:float 8s ease-in-out infinite;
+}
+
+.orb1{
+width:250px;
+height:250px;
+background:#915EFF;
+top:100px;
+left:-100px;
+opacity:.2;
+}
+
+.orb2{
+width:300px;
+height:300px;
+background:#00D4FF;
+bottom:-100px;
+right:-100px;
+opacity:.15;
+}
+
+@keyframes float{
+
+50%{
+transform:translateY(-40px);
+}
+
+}
+
+/* Scroll Indicator */
+
+.scroll{
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+font-size:14px;
+opacity:.8;
+}
+
+/* Mobile */
+
+@media(max-width:1000px){
+
+.hero{
+flex-direction:column-reverse;
+text-align:center;
+gap:50px;
+padding-top:140px;
+}
+
+.left h1{
+font-size:3rem;
+}
+
+.profile-card{
+width:320px;
+height:450px;
+}
+
+.profile-img{
+width:180px;
+height:180px;
+}
+
+nav ul{
+display:none;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="bg"></div>
+
+<div class="glow"></div>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+
+<div class="logo">
+PK.
+</div>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="skills.html">Skills</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="left">
+
+<div class="tag">
+🚀 First Year Developer
+</div>
+
+<h1>
+
+Hi I'm
+
+<span class="gradient">
+Pratiksha
+</span>
+
+Kharpuriya
+
+</h1>
+
+<div class="typing" id="typing"></div>
+
+<p class="desc">
+
+Passionate First Year Developer focused on
+creating modern websites, beautiful user
+interfaces and learning new technologies.
+
+</p>
+
+<div class="buttons">
+
+<button class="btn btn-primary">
+Hire Me
+</button>
+
+<button class="btn btn-secondary">
+Download CV
+</button>
+
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="profile-card" id="card">
+
+<img
+class="profile-img"
+src="https://via.placeholder.com/500"
+alt="Profile">
+
+<h2>
+Pratiksha Kharpuriya
+</h2>
+
+<p>
+Web Developer
+</p>
+
+</div>
+
+</div>
+
+<div class="scroll">
+Scroll Down ↓
+</div>
+
+</section>
+<!-- Three JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+/* Typing Effect */
+
+const text=[
+"Web Developer",
+"Frontend Designer",
+"Java Programmer",
+"Creative Coder"
+];
+
+let count=0;
+let index=0;
+let current="";
+let letter="";
+
+(function type(){
+
+if(count===text.length){
+count=0;
+}
+
+current=text[count];
+
+letter=current.slice(0,++index);
+
+document.getElementById("typing").textContent=letter;
+
+if(letter.length===current.length){
+
+count++;
+index=0;
+
+setTimeout(type,1200);
+
+}else{
+
+setTimeout(type,100);
+
+}
+
+})();
+
+/* Glow Cursor */
+
+const glow=document.querySelector(".glow");
+
+document.addEventListener("mousemove",(e)=>{
+
+glow.style.left=e.clientX+"px";
+glow.style.top=e.clientY+"px";
+
+});
+
+/* 3D Card */
+
+const card=document.getElementById("card");
+
+document.addEventListener("mousemove",(e)=>{
+
+let x=(window.innerWidth/2-e.pageX)/30;
+let y=(window.innerHeight/2-e.pageY)/30;
+
+card.style.transform=
+`rotateY(${x}deg)
+ rotateX(${-y}deg)`;
+
+});
+
+/* Three JS Background */
+
+const scene=new THREE.Scene();
+
+const camera=new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+const renderer=new THREE.WebGLRenderer({
+alpha:true,
+antialias:true
+});
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+document
+.getElementById("bg")
+.appendChild(renderer.domElement);
+
+/* Particles */
+
+const particlesGeometry=
+new THREE.BufferGeometry();
+
+const particlesCount=3000;
+
+const posArray=
+new Float32Array(
+particlesCount*3
+);
+
+for(let i=0;i<particlesCount*3;i++){
+
+posArray[i]=(Math.random()-0.5)*20;
+
+}
+
+particlesGeometry.setAttribute(
+'position',
+new THREE.BufferAttribute(
+posArray,
+3
+)
+);
+
+const particlesMaterial=
+new THREE.PointsMaterial({
+
+size:0.02
+
+});
+
+const particlesMesh=
+new THREE.Points(
+particlesGeometry,
+particlesMaterial
+);
+
+scene.add(particlesMesh);
+
+/* Torus */
+
+const geometry=
+new THREE.TorusGeometry(
+2,
+0.5,
+16,
+100
+);
+
+const material=
+new THREE.MeshStandardMaterial({
+
+color:0x915EFF,
+wireframe:true
+
+});
+
+const torus=
+new THREE.Mesh(
+geometry,
+material
+);
+
+scene.add(torus);
+
+/* Lights */
+
+const pointLight=
+new THREE.PointLight(
+0xffffff
+);
+
+pointLight.position.set(
+5,
+5,
+5
+);
+
+scene.add(pointLight);
+
+const ambientLight=
+new THREE.AmbientLight(
+0xffffff
+);
+
+scene.add(ambientLight);
+
+camera.position.z=5;
+
+/* Animate */
+
+function animate(){
+
+requestAnimationFrame(
+animate
+);
+
+torus.rotation.x+=0.003;
+torus.rotation.y+=0.004;
+
+particlesMesh.rotation.y+=0.0005;
+
+renderer.render(
+scene,
+camera
+);
+
+}
+
+animate();
+
+/* Resize */
+
+window.addEventListener(
+'resize',
+()=>{
+
+camera.aspect=
+window.innerWidth/
+window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+}
+);
+
+</script>
+
+</body>
+</html>
